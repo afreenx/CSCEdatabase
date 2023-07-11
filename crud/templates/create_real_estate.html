@@ -2,32 +2,66 @@
 <html>
 <head>
     <title>Create Real Estate</title>
+    <style>
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 200px;
+        }
+
+        button[type="submit"] {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <h1>Create Real Estate</h1>
-    <form method="POST" action="/realestates/create">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required><br>
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required><br>
-        <label for="price">Price:</label>
-        <input type="number" id="price" name="price" required><br>
-        <label for="listing_date">Listing Date:</label>
-        <input type="date" id="listing_date" name="listing_date" required><br>
-        <label for="sell_date">Sell Date:</label>
-        <input type="date" id="sell_date" name="sell_date" required><br>
-        <label for="agent_id">Agent:</label>
-        <select id="agent_id" name="agent_id" required>
-            {% for agent in agents %}
-                <option value="{{ agent.agent_id }}">{{ agent.name }}</option>
-            {% endfor %}
-        </select><br>
-        <label for="customer_id">Customer:</label>
-        <select id="customer_id" name="customer_id" required>
-            {% for customer in customers %}
-                <option value="{{ customer.customer_id }}">{{ customer.name }}</option>
-            {% endfor %}
-        </select><br>
+    <form method="POST" action="{{ url_for('create_real_estate') }}">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        </div>
+        <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" id="price" name="price" step="0.01" required>
+        </div>
+        <div class="form-group">
+            <label for="listing_date">Listing Date:</label>
+            <input type="date" id="listing_date" name="listing_date" required>
+        </div>
+        <div class="form-group">
+            <label for="sell_date">Sell Date:</label>
+            <input type="date" id="sell_date" name="sell_date">
+        </div>
+        <div class="form-group">
+            <label for="agent_id">Agent:</label>
+            <select id="agent_id" name="agent_id" required>
+                {% for agent in agents %}
+                    <option value="{{ agent.agent_id }}">{{ agent.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="customer_id">Customer:</label>
+            <select id="customer_id" name="customer_id" required>
+                {% for customer in customers %}
+                    <option value="{{ customer.customer_id }}">{{ customer.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
         <button type="submit">Create</button>
     </form>
     <a href="/realestates">Back to Real Estates</a>

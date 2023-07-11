@@ -163,7 +163,10 @@ def create_real_estate():
         location = request.form['location']
         price = request.form['price']
         listing_date = request.form['listing_date']
-        sell_date = request.form['sell_date']
+        sell_date = request.form['sell_date'] 
+        if not sell_date:
+            sell_date = '0001-01-01'  # Set the default empty date value # None #NULL did not work
+
         agent_id = request.form['agent_id']
         customer_id = request.form['customer_id']
         new_real_estate = RealEstate(title=title, location=location, price=price,

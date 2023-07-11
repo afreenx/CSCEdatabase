@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Real Estates</title>
+    <meta charset="utf-8">
+    <title>Real Estate Application</title>
+    <style>
+        /* CSS styling */
+    </style>
 </head>
 <body>
     <h1>Real Estates</h1>
@@ -27,7 +31,13 @@
                     <td>{{ real_estate.location }}</td>
                     <td>{{ real_estate.price }}</td>
                     <td>{{ real_estate.listing_date }}</td>
-                    <td>{{ real_estate.sell_date }}</td>
+                    <td>
+                        {% if real_estate.sell_date %}
+                            {{ real_estate.sell_date }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
                     <td>{{ real_estate.agent.name }}</td>
                     <td>{{ real_estate.customer.name }}</td>
                     <td>
