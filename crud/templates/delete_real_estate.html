@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Real Estate</title>
+</head>
+<body>
+    <h1>Delete Real Estate</h1>
+    <p>Are you sure you want to delete the following real estate entry?</p>
+    <p>ID: {{ real_estate.property_id }}</p>
+    <p>Title: {{ real_estate.title }}</p>
+    <p>Location: {{ real_estate.location }}</p>
+    <p>Price: {{ real_estate.price }}</p>
+    <p>Listing Date: {{ real_estate.listing_date }}</p>
+    <p>Sell Date: {{ real_estate.sell_date }}</p>
+    <p>Agent: {{ real_estate.agent.name }}</p>
+    <p>Customer: {{ real_estate.customer.name }}</p>
+    <form method="POST" action="/realestates/delete/{{ real_estate.property_id }}">
+        <input type="submit" value="Delete">
+    </form>
+</body>
+</html>

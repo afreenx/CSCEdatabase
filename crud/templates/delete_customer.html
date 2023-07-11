@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Customer</title>
+</head>
+<body>
+    <h1>Delete Customer</h1>
+    <p>Are you sure you want to delete this customer?</p>
+    <p>Name: {{ customer.name }}</p>
+    <p>Contact Details: {{ customer.contact_details }}</p>
+    <p>Account Balance: {{ customer.account_balance }}</p>
+
+    <form action="/customers/delete/{{ customer.customer_id }}" method="POST">
+        <input type="submit" value="Delete">
+    </form>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Estates</title>
+</head>
+<body>
+    <h1>Real Estates</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Location</th>
+                <th>Price</th>
+                <th>Listing Date</th>
+                <th>Sell Date</th>
+                <th>Agent</th>
+                <th>Customer</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for real_estate in real_estates %}
+                <tr>
+                    <td>{{ real_estate.property_id }}</td>
+                    <td>{{ real_estate.title }}</td>
+                    <td>{{ real_estate.location }}</td>
+                    <td>{{ real_estate.price }}</td>
+                    <td>{{ real_estate.listing_date }}</td>
+                    <td>{{ real_estate.sell_date }}</td>
+                    <td>{{ real_estate.agent.name }}</td>
+                    <td>{{ real_estate.customer.name }}</td>
+                    <td>
+                        <a href="/realestates/update/{{ real_estate.property_id }}">Edit</a>
+                        <a href="/realestates/delete/{{ real_estate.property_id }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </tablecont. 5. `realestates.html` (continued):
+
+```html
+    </table>
+    <a href="/realestates/create">Create Real Estate</a>
+</body>
+</html>

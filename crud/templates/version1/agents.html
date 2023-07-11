@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real Estate Agents</title>
+</head>
+<body>
+    <h1>Real Estate Agents</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact Details</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for agent in agents %}
+                <tr>
+                    <td>{{ agent.agent_id }}</td>
+                    <td>{{ agent.name }}</td>
+                    <td>{{ agent.contact_details }}</td>
+                    <td>
+                        <a href="/agents/update/{{ agent.agent_id }}">Edit</a>
+                        <a href="/agents/delete/{{ agent.agent_id }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/agents/create">Create Real Estate Agent</a>
+</body>
+</html>

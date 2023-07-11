@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customers</title>
+</head>
+<body>
+    <h1>Customers</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Contact Details</th>
+                <th>Account Balance</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customer_id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.contact_details }}</td>
+                    <td>{{ customer.account_balance }}</td>
+                    <td>
+                        <a href="/customers/update/{{ customer.customer_id }}">Edit</a>
+                        <a href="/customers/delete/{{ customer.customer_id }}">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/customers/create">Create Customer</a>
+</body>
+</html>

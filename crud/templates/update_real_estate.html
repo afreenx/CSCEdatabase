@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Real Estate</title>
+</head>
+<body>
+    <h1>Update Real Estate</h1>
+    <form method="POST" action="/realestates/update/{{ real_estate.property_id }}">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="{{ real_estate.title }}"><br>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" value="{{ real_estate.location }}"><br>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" step="0.01" value="{{ real_estate.price }}"><br>
+
+        <label for="listing_date">Listing Date:</label>
+        <input type="date" id="listing_date" name="listing_date" value="{{ real_estate.listing_date }}"><br>
+
+        <label for="sell_date">Sell Date:</label>
+        <input type="date" id="sell_date" name="sell_date" value="{{ real_estate.sell_date }}"><br>
+
+        <label for="agent">Agent:</label>
+        <input type="text" id="agent" name="agent" value="{{ real_estate.agent.name }}" disabled><br>
+
+        <label for="customer">Customer:</label>
+        <input type="text" id="customer" name="customer" value="{{ real_estate.customer.name }}" disabled><br>
+
+        <input type="submit" value="Update">
+    </form>
+</body>
+</html>

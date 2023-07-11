@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Agent</title>
+</head>
+<body>
+    <h1>Update Agent</h1>
+    <form action="/agents/update/{{ agent.agent_id }}" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ agent.name }}" required><br>
+
+        <label for="contact_details">Contact Details:</label>
+        <input type="text" id="contact_details" name="contact_details" value="{{ agent.contact_details }}" required><br>
+
+        <input type="submit" value="Update">
+    </form>
+</body>
+</html>

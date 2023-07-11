@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Agent</title>
+</head>
+<body>
+    <h1>Delete Agent</h1>
+    <p>Are you sure you want to delete this agent?</p>
+    <p>Name: {{ agent.name }}</p>
+    <p>Contact Details: {{ agent.contact_details }}</p>
+
+    <form action="/agents/delete/{{ agent.agent_id }}" method="POST">
+        <input type="submit" value="Delete">
+    </form>
+</body>
+</html>
