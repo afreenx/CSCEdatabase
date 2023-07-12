@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Listing Details Report</title>
+</head>
+<body>
+    <h1>Listing Details Report</h1>
+    <table>
+        <tr>
+            <th>Property ID</th>
+            <th>Title</th>
+            <th>Location</th>
+            <th>Price</th>
+            <th>Listing Date</th>
+            <th>Sell Date</th>
+            <th>Agent</th>
+            <th>Customer</th>
+        </tr>
+        {% for result in results %}
+        <tr>
+            <td>{{ result[0] }}</td>
+            <td>{{ result[1] }}</td>
+            <td>{{ result[2] }}</td>
+            <td>{{ result[3] }}</td>
+            <td>{{ result[4] }}</td>
+            <td>{{ result[5] }}</td>
+            <td>{{ result[6] }}</td>
+            <td>{{ result[7] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

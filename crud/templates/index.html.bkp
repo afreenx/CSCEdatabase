@@ -1,14 +1,168 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Real Estate Application</title>
+    <meta charset="utf-8">
+    <title>Real Estate Application - CSCE 310 Summer 2023</title>
+    <style>
+        body {
+            background-color: #f2f2f2;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            margin: 0;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            background-color: #fff;
+            margin-bottom: 5px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        li a:hover {
+            text-decoration: underline;
+        }
+
+        .report-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .report-section h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .report-form {
+            margin-bottom: 10px;
+        }
+
+        .report-form label {
+            font-weight: bold;
+        }
+
+        .report-form input[type="text"],
+        .report-form input[type="date"] {
+            margin: 5px;
+            padding: 5px;
+        }
+
+        .report-form button {
+            margin-top: 5px;
+            padding: 8px 15px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .report-results {
+            margin-top: 10px;
+        }
+
+        .report-results table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .report-results th, .report-results td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .report-results th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .report-results tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Custom Colors */
+        h1 {
+            background-color: #4287f5;
+        }
+
+        li {
+            background-color: #f5f542;
+        }
+
+        .report-section {
+            background-color: #e8e8e8;
+        }
+
+        .report-form button {
+            background-color: #f54242;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to the Real Estate Application</h1>
+    <h1>Welcome to the Real Estate Application - CSCE 310 Summer 2023</h1>
     <ul>
         <li><a href="/realestates">List of Real Estates</a></li>
         <li><a href="/customers">List of Customers</a></li>
         <li><a href="/agents">List of Agents</a></li>
     </ul>
+
+    <div class="report-section">
+        <h2>Customer Property Detail</h2>
+        <form class="report-form" action="/report/customer_property_detail" method="POST">
+            <label for="customer_name">Customer Name:</label>
+            <input type="text" id="customer_name" name="customer_name" required>
+            <button type="submit">Generate Report</button>
+        </form>
+
+        <div class="report-results">
+            <!-- Show customer property detail report results here -->
+        </div>
+    </div>
+
+    <div class="report-section">
+        <h2>Listing Details</h2>
+        <form class="report-form" action="/report/listing_details" method="POST">
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" required>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" required>
+            <button type="submit">Generate Report</button>
+        </form>
+
+        <div class="report-results">
+            <!-- Show listing details report results here -->
+        </div>
+    </div>
+
+    <div class="report-section">
+        <h2>New Report</h2>
+        <form class="report-form" action="/report/new_report" method="POST">
+            <!-- Add input fields and labels for the new report here -->
+            <button type="submit">Generate Report</button>
+        </form>
+
+        <div class="report-results">
+            <!-- Show new report results here -->
+        </div>
+    </div>
 </body>
 </html>

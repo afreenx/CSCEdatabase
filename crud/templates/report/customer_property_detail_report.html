@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Property Detail Report</title>
+</head>
+<body>
+    <h1>Customer Property Detail Report</h1>
+    <table>
+        <tr>
+            <th>Customer Name</th>
+            <th>Property Title</th>
+        </tr>
+        {% for result in results %}
+        <tr>
+            <td>{{ result[0] }}</td>
+            <td>{{ result[1] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

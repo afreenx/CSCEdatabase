@@ -1,10 +1,12 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
-from flask_flash import flash
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, redirect
 from flask_migrate import Migrate
+from flask import Flask, render_template, request
+import psycopg2
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Supergmat123#@localhost/estate'
 db = SQLAlchemy(app)
@@ -43,7 +45,8 @@ class RealEstate(db.Model):
 # Home route
 @app.route('/')
 def index():
-    return 'Welcome to the Real Estate Application'
+    # return 'Welcome to the Real Estate Application'
+    return render_template('index.html')
 
 # Customer CRUD routes
 @app.route('/customers', methods=['GET'])
@@ -163,10 +166,7 @@ def create_real_estate():
         location = request.form['location']
         price = request.form['price']
         listing_date = request.form['listing_date']
-        sell_date = request.form['sell_date'] 
-        if not sell_date:
-            sell_date = '0001-01-01'  # Set the default empty date value # None #NULL did not work
-
+        sell_date = request.form['sell_date']
         agent_id = request.form['agent_id']
         customer_id = request.form['customer_id']
         new_real_estate = RealEstate(title=title, location=location, price=price,
@@ -206,7 +206,7 @@ def update_real_estate(property_id):
         db.session.commit()
 
         # Redirect to the real estates page or display a success message
-        flash('Real estate entry updated successfully', 'success')
+        # flash('Real estate entry updated successfully', 'success')
         return redirect('/realestates')
 
     return render_template('update_real_estate.html', real_estate=real_estate)
@@ -224,12 +224,152 @@ def delete_real_estate(property_id):
         db.session.commit()
 
         # Redirect to the real estates page or display a success message
-        flash('Real estate entry deleted successfully', 'success')
+        # flash('Real estate entry deleted successfully', 'success')
         return redirect('/realestates')
 
     return render_template('delete_real_estate.html', real_estate=real_estate)
 
 
+# all other CRUD RULE
+# Customer CRUD routes
+
+
+@app.route('/customers/update/<int:customer_id>', methods=['GET', 'POST'])
+def update_customer(customer_id):
+    customer = Customer.query.get(customer_id)
+    if not customer:
+        return "Customer not found."
+
+    if request.method == 'POST':
+        # Retrieve the form data
+        name = request.form['name']
+        contact_details = request.form['contact_details']
+        account_balance = request.form['account_balance']
+        
+        # Update the database
+        customer.name = name
+        customer.contact_details = contact_details
+        customer.account_balance = account_balance
+        
+        db.session.commit()
+        
+        return redirect('/customers')
+
+    return render_template('update_customer.html', customer=customer)
+
+@app.route('/customers/delete/<int:customer_id>', methods=['GET', 'POST'])
+def delete_customer(customer_id):
+    customer = Customer.query.get(customer_id)
+    if not customer:
+        return "Customer not found."
+
+    if request.method == 'POST':
+        # Delete the customer from the database
+        db.session.delete(customer)
+        db.session.commit()
+
+        return redirect('/customers')
+
+    return render_template('delete_customer.html', customer=customer)
+
+
+# Real Estate Agent CRUD routes
+
+@app.route('/agents/update/<int:agent_id>', methods=['GET', 'POST'])
+def update_agent(agent_id):
+    agent = RealEstateAgent.query.get(agent_id)
+    if not agent:
+        return "Agent not found."
+
+    if request.method == 'POST':
+        # Retrieve the form data
+        name = request.form['name']
+        contact_details = request.form['contact_details']
+        
+        # Update the database
+        agent.name = name
+        agent.contact_details = contact_details
+        
+        db.session.commit()
+        
+        return redirect('/agents')
+
+    return render_template('update_agent.html', agent=agent)
+
+@app.route('/agents/delete/<int:agent_id>', methods=['GET', 'POST'])
+def delete_agent(agent_id):
+    agent = RealEstateAgent.query.get(agent_id)
+    if not agent:
+        return "Agent not found."
+
+    if request.method == 'POST':
+        # Delete the agent from the database
+        db.session.delete(agent)
+        db.session.commit()
+
+        return redirect('/agents')
+
+    return render_template('delete_agent.html', agent=agent)
+
+# End of other CRUD
+
+# Report section
+
+# Route for the index page
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Route for the customer property detail report
+# ...
+
+# Route for the index page
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+# Route for the customer property detail report
+@app.route('/report/customer_property_detail', methods=['GET', 'POST'])
+def customer_property_detail_report():
+    if request.method == 'POST':
+        customer_name = request.form['customer_name']
+        connection = psycopg2.connect(
+            user='postgres',
+            password='Supergmat123#',
+            host='localhost',
+            port='5432',
+            database='estate'
+        )
+        cursor = connection.cursor()
+        query = "SELECT a.name, b.title FROM customer a, real_estate b WHERE a.customer_id = b.customer_id AND name LIKE '%{}%'".format(customer_name)
+        cursor.execute(query)
+        results = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        return render_template('report/customer_property_detail_report.html', results=results)
+    return render_template('report/customer_property_detail_report.html')
+
+# Route for the listing details report
+@app.route('/report/listing_details', methods=['GET', 'POST'])
+def listing_details_report():
+    if request.method == 'POST':
+        start_date = request.form['start_date']
+        end_date = request.form['end_date']
+        connection = psycopg2.connect(
+            user='postgres',
+            password='Supergmat123#',
+            host='localhost',
+            port='5432',
+            database='estate'
+        )
+        cursor = connection.cursor()
+        query = "SELECT * FROM real_estate WHERE listing_date BETWEEN '{}' AND '{}'".format(start_date, end_date)
+        cursor.execute(query)
+        results = cursor.fetchall()
+        cursor.close()
+        connection.close()
+        return render_template('report/listing_details_report.html', results=results)
+    return render_template('report/listing_details_report.html')
 
 #
 
