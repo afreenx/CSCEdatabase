@@ -1,0 +1,61 @@
+-- Table: public.customer
+
+-- DROP TABLE IF EXISTS public.customer;
+
+CREATE TABLE IF NOT EXISTS public.customer
+(
+    customer_id integer NOT NULL DEFAULT nextval('customer_customer_id_seq'::regclass),
+    name character varying(100) COLLATE pg_catalog."default",
+    contact_details character varying(100) COLLATE pg_catalog."default",
+    account_balance numeric(10,2),
+    CONSTRAINT customer_pkey PRIMARY KEY (customer_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.customer
+    OWNER to postgres;
+
+-- Table: public.real_estate
+
+-- DROP TABLE IF EXISTS public.real_estate;
+
+CREATE TABLE IF NOT EXISTS public.real_estate
+(
+    property_id integer NOT NULL DEFAULT nextval('real_estate_property_id_seq'::regclass),
+    title character varying(100) COLLATE pg_catalog."default",
+    location character varying(100) COLLATE pg_catalog."default",
+    price numeric(10,2),
+    listing_date date,
+    sell_date date,
+    customer_id integer,
+    agent_id integer,
+    CONSTRAINT real_estate_pkey PRIMARY KEY (property_id),
+    CONSTRAINT real_estate_customer_id_fkey FOREIGN KEY (customer_id)
+        REFERENCES public.customer (customer_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.real_estate
+    OWNER to postgres;
+
+
+-- Table: public.real_estate_agent
+
+-- DROP TABLE IF EXISTS public.real_estate_agent;
+
+CREATE TABLE IF NOT EXISTS public.real_estate_agent
+(
+    agent_id integer NOT NULL DEFAULT nextval('real_estate_agent_agent_id_seq'::regclass),
+    name character varying(100) COLLATE pg_catalog."default",
+    contact_details character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT real_estate_agent_pkey PRIMARY KEY (agent_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.real_estate_agent
+    OWNER to postgres;
