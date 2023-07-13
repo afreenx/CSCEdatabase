@@ -1,0 +1,302 @@
+
+CSCE310CRUD Real estate Application web application using Python with SQL Alchemy ,Flask
+
+Prerequisites:
+WLS environment  (skip if you have one installed)
+---------------
+Install WLS if you have not one like Ubunto
+https://learn.microsoft.com/en-us/windows/wsl/install
+You can now install everything you need to run WSL with a single command. 
+Open PowerShell or Windows Command Prompt in administrator mode by right-clicking and selecting "Run as administrator", enter the wsl --install command, then restart your machine.
+wsl --list --online
+wsl --install -d Ubuntu
+
+You may need to install any missing packages.
+
+Install postgresSQL DB  ( Skip if you have one installed)
+https://www.postgresql.org/download/
+
+Ubuntu WLS is preferred but could be any . I have WLS ubunto
+Install PostgreSQL
+To install PostgreSQL on WSL (ie. Ubuntu):
+1.	Open your WSL terminal (ie. Ubuntu).
+2.	Update your Ubuntu packages: sudo apt update
+3.	Once the packages have updated, install PostgreSQL (and the -contrib package which has some helpful utilities) with: sudo apt install postgresql postgresql-contrib
+4.	Confirm installation and get the version number: psql --version
+There are 3 commands you need to know once PostgreSQL is installed:
+•	sudo service postgresql status for checking the status of your database.
+•	sudo service postgresql start to start running your database.
+•	sudo service postgresql stop to stop running your database.
+The default admin user, postgres, needs a password assigned in order to connect to a database. To set a password:
+1.	Enter the command: sudo passwd postgres
+2.	You will get a prompt to enter your new password.
+3.	Close and reopen your terminal.
+To run PostgreSQL with psql shell:
+1.	Start your postgres service: sudo service postgresql start
+2.	Connect to the postgres service and open the psql shell: sudo -u postgres psql
+Once you have successfully entered the psql shell, you will see your command line change to look like this: postgres=#
+ Note
+Alternatively, you can open the psql shell by switching to the postgres user with: su - postgres and then entering the command: psql.
+To exit postgres=# enter: \q or use the shortcut key: Ctrl+D
+To see what user accounts have been created on your PostgreSQL installation, use from your WSL terminal: psql -c "\du" ...or just \du if you have the psql shell open. This command will display columns: Account User Name, List of Roles Attributes, and Member of role group(s). To exit back to the command line, enter: q.
+For more about working with PostgreSQL databases, see the PostgreSQL docs.
+To work with with PostgreSQL databases in VS Code, try the PostgreSQL extension.
+
+
+
+After install of WLS and postgres login 
+
+sudo /etc/init.d/postgresql start
+
+If you get ": Permission denied in next command then change permission of your ubunto home in wls environment(ubunto)
+could not change directory to "/home/xxxx": Permission denied
+$ cd home
+chmod 777 xxxx (change xxxx to your user name of ubunto install)
+
+sudo -u postgres psql
+postgres=# \password postgres
+Enter new password: Supergmat123#
+
+postgres=# \q
+
+Database (estate) install steps
+sudo -u postgres psql
+postgres=#
+
+CREATE DATABASE estate WITH OWNER = postgres ENCODING = 'UTF8' CONNECTION LIMIT = -1;
+\c estate
+
+
+Two options
+option 1:
+
+CREATE TABLE customer (
+    customer_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    contact_details VARCHAR(100),
+    account_balance NUMERIC(10, 2));
+
+CREATE TABLE real_estate_agent (
+    agent_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    contact_details VARCHAR(100));
+
+CREATE TABLE real_estate (
+    property_id SERIAL PRIMARY KEY,
+    title VARCHAR(100),
+    location VARCHAR(100),
+    price NUMERIC(10, 2),
+    listing_date DATE,
+    sell_date DATE,
+    customer_id INTEGER,
+    FOREIGN KEY (customer_id) REFERENCES customer (customer_id) ,
+    agent_id INTEGER);
+
+If issue with above Option then you can create as below as well otherwise skip option 2
+
+=============================
+option 2:
+
+-- Table: public.customer
+
+-- DROP TABLE IF EXISTS public.customer;
+
+CREATE TABLE IF NOT EXISTS public.customer
+(
+    customer_id integer NOT NULL DEFAULT nextval('customer_customer_id_seq'::regclass),
+    name character varying(100) COLLATE pg_catalog."default",
+    contact_details character varying(100) COLLATE pg_catalog."default",
+    account_balance numeric(10,2),
+    CONSTRAINT customer_pkey PRIMARY KEY (customer_id)
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.customer
+    OWNER to postgres;
+
+-- Table: public.real_estate
+
+-- DROP TABLE IF EXISTS public.real_estate;
+
+CREATE TABLE IF NOT EXISTS public.real_estate
+(
+    property_id integer NOT NULL DEFAULT nextval('real_estate_property_id_seq'::regclass),
+    title character varying(100) COLLATE pg_catalog."default",
+    location character varying(100) COLLATE pg_catalog."default",
+    price numeric(10,2),
+    listing_date date,
+    sell_date date,
+    customer_id integer,
+    agent_id integer,
+    CONSTRAINT real_estate_pkey PRIMARY KEY (property_id),
+    CONSTRAINT real_estate_customer_id_fkey FOREIGN KEY (customer_id)
+        REFERENCES public.customer (customer_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.real_estate
+    OWNER to postgres;
+-- Table: public.real_estate_agent
+-- DROP TABLE IF EXISTS public.real_estate_agent;
+
+CREATE TABLE IF NOT EXISTS public.real_estate_agent
+(
+    agent_id integer NOT NULL DEFAULT nextval('real_estate_agent_agent_id_seq'::regclass),
+    name character varying(100) COLLATE pg_catalog."default",
+    contact_details character varying(100) COLLATE pg_catalog."default",
+    CONSTRAINT real_estate_agent_pkey PRIMARY KEY (agent_id)
+)
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.real_estate_agent
+    OWNER to postgres;
+
+Install Annaconda and dependecies
+===================================
+Install latest availavle Anaconda: Download and install Anaconda from the official website (https://www.anaconda.com/products/individual). Anaconda includes Python and useful packages for data science and web development.
+Open a terminal or Anaconda Prompt to execute commands.
+open terminal from annaconda navigator
+Step 2: Create a new virtual environment
+
+Create a new virtual environment for your project by running the following command:
+
+conda create --name mywebapp
+
+on make or linux
+On macOS and Linux: source activate mywebapp
+1. Install Flask 
+
+pip install Flask
+
+2. Install SQL Alchemy and the PostgreSQL driver
+
+pip install SQLAlchemy psycopg2
+
+3. Install flask migrate in case we need to change any thing in table during project
+
+pip install Flask-Migrate
+
+4. create new directory called crud , templates and report at your choosen path
+example C:\Users\xxxx\crud replace C:\Users\xxxx
+with your local path
+
+mkdir crud
+cd crud
+mkdir templates
+cd templates
+mkdir report
+
+cd crud
+
+
+5. Change directory for your project to crud (parent directory) example C:\Users\xxxx\crud replace C:\Users\xxxx
+with your local path
+
+cd crud
+
+Use Flask to generate the initial project structure
+
+Run flask init
+
+
+Step 5: Configure the database connection
+create file called app.py  in crud directory
+
+copy the  crud directory at your crud directory from github. or what ever we need to have crud folder including
+all sub durectories from github.
+https://github.com/afreenx/CSCE310CRUD/tree/main
+
+This include all file app.py and directory templates and report inside templates with all files and below
+mentioned credential
+
+#The app.py files will have necessary module imported 
+#Configured PostgreSQL database connection by specifying the database URI 
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://username:password@localhost/mydatabase'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Supergmat123#@localhost/estate'
+
+
+step 6: Run the application
+Start the Flask development server by running the following command:
+flask run
+Access your web application in a browser by visiting the URL displayed in the terminal.
+
+cd crud 
+
+Start the Flask development server by running the following command:
+flask run
+Access your web application in a browser by visiting the URL displayed in the terminal.
+
+http://127.0.0.1:5000    ( This will be home page)
+
+http://127.0.0.1:5000/realestates
+http://127.0.0.1:5000/customers
+http://127.0.0.1:5000/agents
+
+Step 7:  Lets develop more using this framework
+
+
+Informational:
+We have following directory structure
+
+
+crud
+- app.py
+- templates
+  - index.html
+  - create_customer.html
+  - create_agent.html
+  - create_real_estate.html
+  - update_customer.html
+  - update_real_estate.html
+  - delete_real_estate.html
+  - customers.html
+  - agents.html
+  - realestates.html
+  - base.html
+  - report
+    - customer_property_detail_report.html
+    - listing_details_report.html
+
+Based on the app.py code provided, here is a summary of the HTML templates used:
+
+index.html: It is the landing page of the application and contains links to the lists of real estates, customers, and agents.
+
+customers.html: It displays a list of customers and their details.
+
+create_customer.html: It provides a form to create a new customer.
+
+update_customer.html: It provides a form to update the details of an existing customer.
+
+agents.html: It displays a list of real estate agents and their details.
+
+create_agent.html: It provides a form to create a new real estate agent.
+
+update_agent.html: It provides a form to update the details of an existing real estate agent.
+
+realestates.html: It displays a list of real estates and their details.
+
+create_real_estate.html: It provides a form to create a new real estate property.
+
+update_real_estate.html: It provides a form to update the details of an existing real estate property.
+
+delete_real_estate.html: It displays a confirmation message for deleting a real estate property.
+
+delete_customer.html: It displays a confirmation message for deleting a customer.
+
+delete_agent.html: It displays a confirmation message for deleting a real estate agent.
+
+report/customer_property_detail_report.html: It provides a form to generate a report for customer property details.
+
+report/listing_details_report.html: It provides a form to generate a report for listing details.
+
+These templates are rendered by the Flask application based on the corresponding routes and view functions defined in app.py.
+
+
+
+
+
+
+
+
