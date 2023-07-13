@@ -13,19 +13,23 @@ Down load Readme.pdf
 git clone https://github.com/afreenx/CSCE310CRUD
 
 sudo -u postgres psql
+
 postgres=# \password postgres
+
 Enter new password: Supergmat123#
 
 postgres=# \q
 
 
 CREATE DATABASE estate WITH OWNER = postgres ENCODING = 'UTF8' CONNECTION LIMIT = -1;
+
 \c estate
 
 
 Invoke conda terminal
 
 conda env create -f environment-mywebapp.yml
+
 conda activate mywebapp
 
 enter python shell by typing python  ---- This will create all tables in estate database from app.py file
