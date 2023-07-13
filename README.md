@@ -29,15 +29,22 @@ conda env create -f environment-mywebapp.yml
 conda activate mywebapp
 
 enter python shell by typing python  ---- This will create all tables in estate database from app.py file
+
 from app import db
+
 <hit enter>
+
 db.create_all()
+
 <hit enter>
-exit()
+
+  exit()
 
 
 to run application
+
 change to crud directory
+
 flask run
 
 
