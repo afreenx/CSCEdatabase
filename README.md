@@ -47,4 +47,13 @@ change to crud directory
 
 flask run
 
+URLS
+http://127.0.0.1:5000 ( main page)
+
+http://127.0.0.1:5000/realestates
+
+http://127.0.0.1:5000/customers
+
+http://127.0.0.1:5000/agents
+
 
