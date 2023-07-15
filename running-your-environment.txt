@@ -4,6 +4,7 @@ To create a database
 sudo -u postgres psql
 postgres=# \password postgres
 Enter new password: Supergmat123#
+csce310 is password now
 
 postgres=# \q
 
