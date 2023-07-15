@@ -8,7 +8,7 @@ from flask import Flask, render_template, request
 import psycopg2
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Supergmat123#@localhost/estate'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:csce310@localhost/estate'
 db = SQLAlchemy(app)
 
 # Initialize Flask-Migrate
@@ -325,9 +325,9 @@ def customer_property_detail_report():
         customer_name = request.form['customer_name']
         connection = psycopg2.connect(
             user='postgres',
-            password='Supergmat123#',
+            password='csce310',
             host='localhost',
-            port='5432',
+            port='5433',
             database='estate'
         )
         cursor = connection.cursor()
@@ -347,9 +347,9 @@ def listing_details_report():
         end_date = request.form['end_date']
         connection = psycopg2.connect(
             user='postgres',
-            password='Supergmat123#',
+            password='csce310',
             host='localhost',
-            port='5432',
+            port='5433',
             database='estate'
         )
         cursor = connection.cursor()
