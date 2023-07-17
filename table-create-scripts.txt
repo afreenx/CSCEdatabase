@@ -1,3 +1,33 @@
+TABLES : CREATE TABLE customer (
+    customer_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    contact_details VARCHAR(100),
+    account_balance NUMERIC(10, 2));
+
+CREATE TABLE real_estate_agent (
+    agent_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    contact_details VARCHAR(100));
+
+
+CREATE TABLE real_estate (
+    property_id SERIAL PRIMARY KEY,
+    title VARCHAR(100),
+    location VARCHAR(100),
+    price NUMERIC(10, 2),
+    listing_date DATE,
+    sell_date DATE,
+    customer_id INTEGER,
+    FOREIGN KEY (customer_id) REFERENCES customer (customer_id) ,agent_id INTEGER);
+
+
+
+
+
+-------------------- PG ADMIN DUMP ---for reference
+
+
+
 -- Table: public.customer
 
 -- DROP TABLE IF EXISTS public.customer;
