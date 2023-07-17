@@ -32,6 +32,7 @@ conda env create -f environment-mywebapp.yml
 
 conda activate mywebapp
 
+
 enter python shell by typing python  ---- This will create all tables in estate database from app.py file
 
 from app import db
@@ -44,6 +45,7 @@ db.create_all()
 
   exit()
 
+note in case trouble creating table using apps create manually as in table script file.
 
 to run application
 
