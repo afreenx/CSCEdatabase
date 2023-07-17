@@ -25,6 +25,29 @@ CREATE DATABASE estate WITH OWNER = postgres ENCODING = 'UTF8' CONNECTION LIMIT 
 
 \c estate
 
+CREATE TABLE customer (
+    customer_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    contact_details VARCHAR(100),
+    account_balance NUMERIC(10, 2));
+
+CREATE TABLE real_estate_agent (
+    agent_id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    contact_details VARCHAR(100));
+    
+CREATE TABLE real_estate (
+    property_id SERIAL PRIMARY KEY,
+    title VARCHAR(100),
+    location VARCHAR(100),
+    price NUMERIC(10, 2),
+    listing_date DATE,
+    sell_date DATE,
+    customer_id INTEGER,
+    FOREIGN KEY (customer_id) REFERENCES customer (customer_id) ,agent_id INTEGER);
+
+
+
 
 Invoke conda terminal
 
@@ -32,7 +55,7 @@ conda env create -f environment-mywebapp.yml
 
 conda activate mywebapp
 
-
+# skip if you create manually
 enter python shell by typing python  ---- This will create all tables in estate database from app.py file
 
 from app import db
@@ -48,7 +71,7 @@ db.create_all()
 note in case trouble creating table using apps create manually as in table script file.
 
 to run application
-
+=== skip end
 change to crud directory
 
 flask run
