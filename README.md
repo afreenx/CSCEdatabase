@@ -71,7 +71,7 @@ db.create_all()
 note in case trouble creating table using apps create manually as in table script file.
 
 to run application
-=== skip end
+## skip end
 change to crud directory
 
 flask run
